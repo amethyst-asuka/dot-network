@@ -13,6 +13,8 @@ Public Class Dot
         End Get
     End Property
 
+    Public Property Nearby As New Dictionary(Of Dot, Double)
+
     Public Overrides Function ToString() As String
         Return Me.GetJson
     End Function

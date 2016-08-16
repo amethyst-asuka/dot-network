@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Public Class Canvas
 
-    ReadOnly __driver As New UpdateThread(30, AddressOf __update)
+    ReadOnly __driver As New UpdateThread(10, AddressOf __update)
 
     Dim model As Model
 
@@ -17,8 +17,9 @@ Public Class Canvas
     End Sub
 
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
-        model = New Model(0, Size)
+        model = New Model(100, Size)
         __driver.Start()
+        BackColor = Color.LightSkyBlue
     End Sub
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint

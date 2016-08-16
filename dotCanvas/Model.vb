@@ -12,7 +12,8 @@ Public Class Model
     ''' Dot size
     ''' </summary>
     ''' <returns></returns>
-    Public Property Size As Single = 10
+    Public Property Size As Single = 2
+    Public Property R As Single = 80
 
     ''' <summary>
     ''' 
@@ -20,7 +21,7 @@ Public Class Model
     ''' <param name="n">The number of the dots on the canvas</param>
     Sub New(n As Integer, rect As Size, Optional speeds As DoubleRange = Nothing)
         If speeds Is Nothing Then
-            speeds = New DoubleRange(3, 10)
+            speeds = New DoubleRange(0.1, 2)
         End If
 
         Dim dlst As New List(Of Dot)
@@ -40,6 +41,8 @@ Public Class Model
     End Sub
 
     Public Sub Calculate(rect As Rectangle)
+        Dim dd As New Value(Of Double)
+
         For Each x As Dot In Dots
             Dim l = x.Location
             Dim d = x.Direction
@@ -55,6 +58,14 @@ Public Class Model
                     x.Direction = New PointF(-x.Direction.X, -x.Direction.Y)
                 End If
             End If
+
+            x.Nearby.Clear()
+
+            For Each y As Dot In Dots.Where(Function(o) Not o Is x)
+                If (dd = Distance(x.Location, y.Location)) <= R Then
+                    x.Nearby.Add(y, dd)
+                End If
+            Next
         Next
     End Sub
 
@@ -66,7 +77,13 @@ Public Class Model
         Dim b As New SolidBrush(Color.Black)
 
         For Each x In Dots
-            g.FillPie(b, New Rectangle(New Point(x.Location.X, x.Location.Y), New Size(Size, Size)), 0, 360)
+            Dim px As New Point(x.Location.X, x.Location.Y)
+
+            g.FillPie(b, New Rectangle(px, New Size(Size, Size)), 0, 360)
+
+            For Each y In x.Nearby
+                Call g.DrawLine(Pens.Purple, x.Location, y.Key.Location)
+            Next
         Next
     End Sub
 End Class
