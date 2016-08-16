@@ -22,8 +22,28 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
+        Me.Canvas1 = New dotCanvas.Canvas()
+        Me.SuspendLayout()
+        '
+        'Canvas1
+        '
+        Me.Canvas1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Canvas1.Location = New System.Drawing.Point(0, 0)
+        Me.Canvas1.Name = "Canvas1"
+        Me.Canvas1.Size = New System.Drawing.Size(712, 481)
+        Me.Canvas1.TabIndex = 0
+        '
+        'Form1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(712, 481)
+        Me.Controls.Add(Me.Canvas1)
+        Me.Name = "Form1"
         Me.Text = "Form1"
+        Me.ResumeLayout(False)
+
     End Sub
+
+    Friend WithEvents Canvas1 As Canvas
 End Class
